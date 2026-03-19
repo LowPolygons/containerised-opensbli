@@ -147,7 +147,7 @@ cd opensbli
 git checkout Training_2025_09
 ```
 
-Export PYTHONPATH variable
+Export PYTHONPATH variable (export_to_run)
 
 ```sh
 export PYTHONPATH=$PYTHONPATH:/home/<username>/containerised-opensbli/opensbli
