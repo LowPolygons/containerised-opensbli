@@ -1,0 +1,18 @@
+#!/bin/bash
+
+if [[ -z $OPS_INSTALL_PATH ]]; then
+    echo "Please set OPS_INSTALL_PATH before running this script"
+    exit
+fi
+
+mkdir -p $OPS_INSTALL_PATH/../ops_translator/ops_venv
+
+python3.8 -m venv $OPS_INSTALL_PATH/../ops_translator/ops_venv
+
+source $OPS_INSTALL_PATH/../ops_translator/ops_venv/bin/activate
+
+python3.8 -m pip install -r $OPS_INSTALL_PATH/../ops_translator/requirements.txt
+
+python3.8 -m pip install --force-reinstall libclang==16.0.6
+
+echo "run \"source $OPS_INSTALL_PATH/../ops_translator/ops_venv/bin/activate\""
