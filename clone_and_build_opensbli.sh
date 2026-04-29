@@ -1,6 +1,6 @@
 #!/bin/bash
-git clone https://github.com/rfj82982/opensbli.git
+git clone git@github.com:opensbli/opensbli_development.git opensbli
 
 cd opensbli
 
-git checkout Training_2025_09
+git checkout thermochemical

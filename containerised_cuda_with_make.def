@@ -5,16 +5,9 @@ From: ubuntu:noble
     # Update system
     apt update -y && apt upgrade -y
 
-    # Python old repositories
     apt install software-properties-common -y 
-    add-apt-repository ppa:deadsnakes/ppa -y
-
-    apt install -y python3.7
-    apt install -y python3.7-venv
-    apt install -y python3-pip
-
-    apt install -y python3.8
-    apt install -y python3.8-venv
+    apt install python3 -y
+    apt install python3-venv -y
 
     # Fortran compiler
     apt install -y gfortran
@@ -25,6 +18,9 @@ From: ubuntu:noble
     # MPI
     apt install -y openmpi-bin openmpi-common libopenmpi-dev
 
+    # New C++23 requirement
+    apt install -y cpp-14 libstdc++-14-dev libc++-dev libc++abi-dev
+
     wget https://developer.download.nvidia.com/compute/cuda/12.8.0/local_installers/cuda-repo-debian12-12-8-local_12.8.0-570.86.10-1_amd64.deb
     dpkg -i cuda-repo-debian12-12-8-local_12.8.0-570.86.10-1_amd64.deb
     cp /var/cuda-repo-debian12-12-8-local/cuda-*-keyring.gpg /usr/share/keyrings/
@@ -32,13 +28,16 @@ From: ubuntu:noble
     apt-get -y install cuda-toolkit-12-8
 
 %environment
-    export CXX=gnu
-    export OPS_INSTALL_PATH=/home/<username>/containerised-opensbli/OPS/ops/
-    export OPS_TRANSLATOR=/home/<username>/containerised-opensbli/OPS/ops_translator/ops-translator/
+    export HERE=~/containerised-opensbli/
+    export CXX=g++
     export OPS_COMPILER=gnu
-    export MPI_INSTALL_PATH=/usr/
+    export OPS_INSTALL_PATH=${HERE}/OPS/ops
     export HDF5_INSTALL_PATH=/usr/lib/x86_64-linux-gnu/hdf5/openmpi/
-    export CUDA_INSTALL_PATH=/usr/local/cuda
+    export MPI_INSTALL_PATH=/usr/
     export USE_HDF5=1
-%runscript
-    exec "$@"
+    export NV_ARCH=Turing
+    export MPICXX=mpicxx 
+    export CUDA_HOME=/usr/local/cuda
+    export CUDA_INSTALL_PATH=/usr/local/cuda
+    export PATH=$CUDA_HOME/bin:$PATH
+    export LD_LIBRARY_PATH=$CUDA_HOME/lib64:$LD_LIBRARY_PATH
